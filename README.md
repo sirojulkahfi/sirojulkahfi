@@ -36,7 +36,7 @@ Software Developer & Industrial Automation Enthusiast. Fokus pada pengembangan a
 ### 📬 Hubungi Saya
 
 <p align="left">
-  <a href="[(https://id.linkedin.com/in/sirojul-kahfi-29a170224(https://id.linkedin.com/in/sirojul-kahfi-29a170224)" target="_blank">
+  <a href="https://id.linkedin.com/in/sirojul-kahfi-29a170224" target="_blank">
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
   </a>
   &nbsp;

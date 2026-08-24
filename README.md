@@ -1,6 +1,6 @@
-# Hi there, I'm [Nama Kamu] 👋
+# Hi there, I'm [Sirojul Kahfi] 👋
 
-Seorang Software Developer & Industrial Automation Enthusiast. Fokus pada pengembangan aplikasi web modern dan sistem otomasi industri/kontrol berbasis PLC.
+oftware Developer & Industrial Automation Enthusiast. Fokus pada pengembangan aplikasi web modern dan sistem otomasi industri/kontrol berbasis PLC.
 
 ---
 
@@ -13,21 +13,29 @@ Seorang Software Developer & Industrial Automation Enthusiast. Fokus pada pengem
 
 ### 🛠️ Tech Stack & Keahlian
 
-**Web Development & Databases**
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+**Web & Software Engineering**
+<p align="left">
+  <img src="https://skillicons.dev/icons?i=nextjs,react,ts,js,nodejs,postgres,prisma,tailwind,git,docker" />
+</p>
 
-**Industrial Automation & PLC**
-![Mitsubishi](https://img.shields.io/badge/Mitsubishi_Electric-E60012?style=for-the-badge&logo=mitsubishi&logoColor=white)
-![Omron](https://img.shields.io/badge/Omron_PLC-005BAC?style=for-the-badge&logoColor=white)
-![Ladder Logic](https://img.shields.io/badge/Ladder_Logic-4B0082?style=for-the-badge&logoColor=white)
-![Industrial IoT](https://img.shields.io/badge/SCADA_%2F_IIoT-008080?style=for-the-badge&logoColor=white)
+* **Frontend:** Next.js (App Router, SSR/SSG), React.js, Tailwind CSS, TypeScript / JavaScript
+* **Backend & API:** Node.js, REST API integration
+* **Database & ORM:** PostgreSQL, Prisma ORM
+* **Tools & DevOps:** Git, GitHub, Docker
 
----
+**Industrial Automation & OT (PLC & Hardware)**
+<p align="left">
+  <a title="Mitsubishi Electric"><img src="https://simpleicons.org/icons/mitsubishielectric.svg" width="40" height="40" alt="Mitsubishi" /></a> &nbsp;
+  <a title="Omron"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/omron.svg" width="40" height="40" alt="Omron" /></a> &nbsp;
+  <a title="Arduino/Microcontroller"><img src="https://skillicons.dev/icons?i=arduino,c,cpp,raspberrypi,linux" /></a>
+</p>
+
+* **PLC Platforms:**
+  * **Mitsubishi:** FX Series, Q Series (GX Works2 / GX Works3)
+  * **Omron:** CP Series, CJ Series (CX-Programmer, Sysmac Studio)
+* **Programming Languages:** Ladder Diagram (LD), Structured Text (ST)
+* **Communication Protocols:** Modbus (RTU / TCP), Serial (RS-232 / RS-485), Ethernet/IP, MQTT
+* **Integration Focus:** IT/OT Convergence, SCADA / HMI interfacing, Real-time machine data acquisition ke Web Dashboard
 
 ### 📊 GitHub Statistics
 
@@ -35,8 +43,6 @@ Seorang Software Developer & Industrial Automation Enthusiast. Fokus pada pengem
   <img src="https://github-readme-stats.vercel.app/api?username=USERNAME_GITHUB&show_icons=true&theme=tokyonight&hide_border=true" alt="GitHub Stats" />
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=USERNAME_GITHUB&layout=compact&theme=tokyonight&hide_border=true" alt="Top Languages" />
 </p>
-
----
 
 ### 📬 Hubungi Saya
 * LinkedIn: [Profil LinkedIn Kamu](https://linkedin.com/in/username)

@@ -1,8 +1,5 @@
 # Hi there, I'm Sirojul Kahfi 👋
-
-oftware Developer & Industrial Automation Enthusiast. Fokus pada pengembangan aplikasi web modern dan sistem otomasi industri/kontrol berbasis PLC.
-
----
+Software Developer & Industrial Automation Enthusiast. Fokus pada pengembangan aplikasi web modern dan sistem otomasi industri/kontrol berbasis PLC.
 
 ### 🚀 Tentang Saya
 * 💻 Terbiasa membangun aplikasi web interaktif dan scalable menggunakan **Next.js** & **React**.

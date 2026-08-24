@@ -32,7 +32,6 @@ Software Developer & Industrial Automation Enthusiast. Fokus pada pengembangan a
 * **Industrial Communication:** Modbus (RTU/TCP), Serial (RS-232/RS-485), Ethernet/IP, MQTT
 * **Integration Focus:** IT/OT Convergence, HMI/SCADA, Real-time machine data acquisition ke Web Dashboard
 
----
 
 ### 📬 Hubungi Saya
 
@@ -42,6 +41,6 @@ Software Developer & Industrial Automation Enthusiast. Fokus pada pengembangan a
   </a>
   &nbsp;
   <a href="mailto:sirojulkahfi@outlook.com">
-    <img src="https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
+    <img src="https://img.shields.io/badge/Microsoft_Outlook-0078D4?style=for-the-badge&logo=microsoftoutlook&logoColor=white" alt="Outlook" />
   </a>
 </p>

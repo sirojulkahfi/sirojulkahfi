@@ -1,4 +1,4 @@
-# Hi there, I'm [Sirojul Kahfi] 👋
+# Hi there, I'm Sirojul Kahfi 👋
 
 oftware Developer & Industrial Automation Enthusiast. Fokus pada pengembangan aplikasi web modern dan sistem otomasi industri/kontrol berbasis PLC.
 
@@ -9,8 +9,6 @@ oftware Developer & Industrial Automation Enthusiast. Fokus pada pengembangan ap
 * ⚡ Berpengalaman dalam pemrograman kontrol mesin & otomasi industri menggunakan **PLC Mitsubishi** dan **Omron**.
 * 🔗 Tertarik pada integrasi sistem industri (OT) dengan web dashboard & monitoring berbasis cloud (IT).
 
----
-
 ### 🛠️ Tech Stack & Keahlian
 
 **Web & Software Engineering**
@@ -19,31 +17,34 @@ oftware Developer & Industrial Automation Enthusiast. Fokus pada pengembangan ap
 </p>
 
 * **Frontend:** Next.js (App Router, SSR/SSG), React.js, Tailwind CSS, TypeScript / JavaScript
-* **Backend & API:** Node.js, REST API integration
-* **Database & ORM:** PostgreSQL, Prisma ORM
-* **Tools & DevOps:** Git, GitHub, Docker
+* **Backend & Database:** Node.js, PostgreSQL, Prisma ORM, REST API
+* **Tools & Environment:** Git, GitHub, Docker
 
-**Industrial Automation & OT (PLC & Hardware)**
+**Industrial Automation & PLC**
 <p align="left">
-  <a title="Mitsubishi Electric"><img src="https://simpleicons.org/icons/mitsubishielectric.svg" width="40" height="40" alt="Mitsubishi" /></a> &nbsp;
-  <a title="Omron"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/omron.svg" width="40" height="40" alt="Omron" /></a> &nbsp;
-  <a title="Arduino/Microcontroller"><img src="https://skillicons.dev/icons?i=arduino,c,cpp,raspberrypi,linux" /></a>
+  <img src="https://img.shields.io/badge/Mitsubishi_Electric-E60012?style=for-the-badge&logo=mitsubishi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Omron_Automation-005BAC?style=for-the-badge&logoColor=white" />
+  <img src="https://img.shields.io/badge/Modbus_&_Serial-4B0082?style=for-the-badge&logoColor=white" />
+  <img src="https://img.shields.io/badge/SCADA_&_IIoT-008080?style=for-the-badge&logoColor=white" />
 </p>
 
-* **PLC Platforms:**
+* **PLC Platforms & Software:**
   * **Mitsubishi:** FX Series, Q Series (GX Works2 / GX Works3)
   * **Omron:** CP Series, CJ Series (CX-Programmer, Sysmac Studio)
 * **Programming Languages:** Ladder Diagram (LD), Structured Text (ST)
-* **Communication Protocols:** Modbus (RTU / TCP), Serial (RS-232 / RS-485), Ethernet/IP, MQTT
-* **Integration Focus:** IT/OT Convergence, SCADA / HMI interfacing, Real-time machine data acquisition ke Web Dashboard
+* **Industrial Communication:** Modbus (RTU/TCP), Serial (RS-232/RS-485), Ethernet/IP, MQTT
+* **Integration Focus:** IT/OT Convergence, HMI/SCADA, Real-time machine data acquisition ke Web Dashboard
 
-### 📊 GitHub Statistics
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=USERNAME_GITHUB&show_icons=true&theme=tokyonight&hide_border=true" alt="GitHub Stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=USERNAME_GITHUB&layout=compact&theme=tokyonight&hide_border=true" alt="Top Languages" />
-</p>
+---
 
 ### 📬 Hubungi Saya
-* LinkedIn: [Profil LinkedIn Kamu](https://linkedin.com/in/username)
-* Email: [emailmu@example.com](mailto:emailmu@example.com)
+
+<p align="left">
+  <a href="https://linkedin.com/in/USERNAME_LINKEDIN" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
+  </a>
+  &nbsp;
+  <a href="mailto:emailmu@example.com">
+    <img src="https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
+  </a>
+</p>

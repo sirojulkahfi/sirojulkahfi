@@ -16,7 +16,27 @@
   <img src="https://img.shields.io/badge/Stack-Next.js%20%7C%20PLC%20%7C%20SCADA-00ff88?style=for-the-badge&labelColor=0d1117" alt="Stack" />
 </p>
 
+```text
+========================================================================
+PROGRAM : SIROJUL_KAHFI_MAIN.gxw   | CPU: MITSUBISHI Q-SERIES / OMRON SYSMAC
+STATUS  : RUN MODE (M8000 = ON)     | SCAN TIME: 0.28 ms | STEP: 0000 -> END
+========================================================================
+```
+
 ---
+
+```text
++--[ NETWORK 001 : TENTANG SAYA (PROFILE_INIT) ]------------------------+
+|                                                                       |
+|  |--[ M8000 ]---+--[ MOV "Fullstack Web Developer"   D100_ROLE     ]--|
+|  | (Always ON)  |--[ MOV "Industrial Automation"     D102_DOMAIN   ]  |
+|  |              |--[ MOV "PLC Mitsubishi & Omron"    D104_HARDWARE ]  |
+|  |              +--[ CALL P_IT_OT_CONVERGENCE        K1            ]  |
+|  |                                                                 |  |
+|  +--[ M8013 ]------[ OUT Y001_SYSTEM_OPERATIONAL                   ]--+
+|    (1s Pulse)      (Real-time Web Monitoring + SCADA Active)          |
++-----------------------------------------------------------------------+
+```
 
 ### 🚀 Tentang Saya
 Software Developer & Industrial Automation Enthusiast. Fokus pada pengembangan aplikasi web modern dan integrasi sistem otomasi industri / kontrol berbasis PLC:
@@ -26,6 +46,17 @@ Software Developer & Industrial Automation Enthusiast. Fokus pada pengembangan a
 * 🔗 **IT / OT Convergence:** Mengintegrasikan sistem otomasi industri (OT: Modbus, Serial RS-232/485, MQTT, SCADA) dengan web dashboard monitoring & cloud analytics real-time (IT).
 
 ---
+
+```text
++--[ NETWORK 002 : TECH STACK & DATA REGISTERS ]------------------------+
+|                                                                       |
+|  |--[ X001_WEB_REQ ]---[ BMOV D200_WEB_CORE   D300_DEPLOY K10 ]--(Y002)
+|  |  (Web Dashboard)    (Next.js, React, Node, Postgres, Docker) (SSR) |
+|  |                                                                 |  |
+|  +--[ X002_PLC_TRIG ]--[ MC_ROBOT_ARM "UNIT-73" D400_OT   K8  ]--(Y003)
+|     (Sensor / PLC)     (Mitsubishi FX/Q, Omron CP/CJ, SCADA)   (AUTO) |
++-----------------------------------------------------------------------+
+```
 
 ### 🛠️ Tech Stack & Keahlian
 
@@ -56,12 +87,32 @@ Software Developer & Industrial Automation Enthusiast. Fokus pada pengembangan a
 
 ---
 
+```text
++--[ NETWORK 003 : TELEMETRY & ACTIVITY MONITOR ]-----------------------+
+|                                                                       |
+|  |--[ M8013 ]----------[ PID_CONTROL "GITHUB_STREAK" D500 ]-----(Y004)|
+|    (1s Clock Pulse)    (Continuous Dev Streak & Commit Flow)   (SYNC) |
++-----------------------------------------------------------------------+
+```
+
 ### 📈 GitHub Streak Stats
 <p align="center">
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=sirojulkahfi&theme=tokyonight&background=0d1117&ring=00f0ff&fire=00f0ff&currStreakNum=00f0ff" alt="Sirojul's GitHub Streak" />
 </p>
 
 ---
+
+```text
++--[ NETWORK 004 : COMMUNICATION BUS (CONNECT_ME) ]---------------------+
+|                                                                       |
+|  |--[ X003_PING ]---+--[ COM_OPEN "LinkedIn"   PORT_LINKEDIN ]--(M100)|
+|  |  (Connect Req)   |--[ COM_OPEN "Outlook"    PORT_MAIL     ]--(M101)|
+|  |                  +--[ COM_OPEN "GitHub"     PORT_REPO     ]--(M102)|
+|  |                                                                    |
+|  +--[ FEND ]----------------------------------------------------------+
+|    (End of Main Program)
++-----------------------------------------------------------------------+
+```
 
 ### 📬 Hubungi Saya
 

@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" width="100%" height="100%">
+<defs>
+
+      <linearGradient id="railGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#00FF88"/>
+        <stop offset="100%" stop-color="#00DD77"/>
+      </linearGradient>
+      <linearGradient id="boxGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#161b22"/>
+        <stop offset="100%" stop-color="#0d1117"/>
+      </linearGradient>
+      <filter id="greenGlow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+      <filter id="cyanGlow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+      <style>
+        .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+        .rail-lbl { fill: #00FF88; font-size: 11px; font-weight: bold; letter-spacing: 1px; }
+        .rail-neg { fill: #6e7681; font-size: 11px; font-weight: bold; letter-spacing: 1px; }
+        .rung-hdr { fill: #58a6ff; font-size: 12px; font-weight: bold; }
+        .rung-sub { fill: #8b949e; font-size: 10px; }
+        .inst-title { fill: #00f0ff; font-size: 11px; font-weight: bold; }
+        .inst-param { fill: #f0883e; font-size: 10px; font-weight: bold; }
+        .inst-val { fill: #e6edf3; font-size: 10px; }
+        .inst-reg { fill: #7ee787; font-size: 10px; font-weight: bold; }
+        .contact-lbl { fill: #7ee787; font-size: 11px; font-weight: bold; text-anchor: middle; }
+        .contact-tag { fill: #8b949e; font-size: 9px; text-anchor: middle; }
+        .coil-lbl { fill: #00ff88; font-size: 11px; font-weight: bold; text-anchor: middle; }
+        .coil-tag { fill: #8b949e; font-size: 9px; text-anchor: middle; }
+        .wire { stroke: #00ff88; stroke-width: 2; fill: none; }
+        .wire-off { stroke: #30363d; stroke-width: 2; fill: none; }
+        .wire-blue { stroke: #388bfd; stroke-width: 2; fill: none; }
+      </style>
+    
+</defs>
+<rect width="960" height="680" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+<rect x="15" y="15" width="930" height="36" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+<circle cx="35" cy="33" r="6" fill="#00ff88" filter="url(#greenGlow)"/>
+<text x="50" y="37" class="mono" fill="#00ff88" font-size="12px" font-weight="bold">PLC RUN</text>
+<text x="130" y="37" class="mono" fill="#8b949e" font-size="11px">CPU: <tspan fill="#e6edf3" font-weight="bold">MITSUBISHI Q-SERIES / OMRON SYSMAC</tspan></text>
+<text x="490" y="37" class="mono" fill="#8b949e" font-size="11px">SCAN: <tspan fill="#e6edf3">0.24ms</tspan></text>
+<text x="600" y="37" class="mono" fill="#8b949e" font-size="11px">PROG: <tspan fill="#58a6ff" font-weight="bold">SIROJUL_KAHFI.LD</tspan></text>
+<circle cx="890" cy="33" r="4" fill="#00f0ff" filter="url(#cyanGlow)"/>
+<text x="902" y="37" class="mono" fill="#00f0ff" font-size="11px" font-weight="bold">ONLINE</text>
+<line x1="55" y1="70" x2="55" y2="650" stroke="url(#railGrad)" stroke-width="4" filter="url(#greenGlow)"/>
+<text x="55" y="62" class="mono rail-lbl" text-anchor="middle">L1 (+24V)</text>
+<line x1="905" y1="70" x2="905" y2="650" stroke="#30363d" stroke-width="4"/>
+<text x="905" y="62" class="mono rail-neg" text-anchor="middle">N (0V / COM)</text>
+<text x="68" y="92" class="mono rung-hdr">// RUNG 000 : PROFIL PENGEMBANG &amp; INVENTORI SISTEM</text>
+<line x1="55" y1="110" x2="105" y2="110" class="wire"/>
+<line x1="105" y1="98" x2="105" y2="122" stroke="#00ff88" stroke-width="3"/>
+<line x1="120" y1="98" x2="120" y2="122" stroke="#00ff88" stroke-width="3"/>
+<line x1="105" y1="110" x2="120" y2="110" stroke="#00ff88" stroke-width="1.5" stroke-dasharray="2,2"/>
+<text x="112" y="93" class="mono contact-lbl">SM400</text>
+<text x="112" y="134" class="mono contact-tag">(Always ON)</text>
+<line x1="120" y1="110" x2="175" y2="110" class="wire"/>
+<rect x="175" y="78" width="570" height="64" rx="5" fill="url(#boxGrad)" stroke="#388bfd" stroke-width="1.5"/>
+<rect x="175" y="78" width="570" height="20" rx="5" fill="#1f6feb" opacity="0.3"/>
+<text x="185" y="92" class="mono inst-title">MOV (16-Bit String Move)</text>
+<text x="185" y="114" class="mono inst-param">s : <tspan class="inst-val">"Sirojul Kahfi - Software Developer &amp; Industrial Automation Enthusiast"</tspan></text>
+<text x="185" y="132" class="mono inst-param">d : <tspan class="inst-reg">D000_DEVELOPER_CORE_PROFILE</tspan></text>
+<line x1="745" y1="110" x2="815" y2="110" class="wire"/>
+<path d="M 815 96 A 14 14 0 0 1 815 124" stroke="#00ff88" stroke-width="2.5" fill="none"/>
+<path d="M 845 96 A 14 14 0 0 0 845 124" stroke="#00ff88" stroke-width="2.5" fill="none"/>
+<text x="830" y="114" class="mono coil-lbl">Y000</text>
+<text x="830" y="135" class="mono coil-tag">(SYS_READY)</text>
+<line x1="845" y1="110" x2="905" y2="110" class="wire-off"/>
+<text x="68" y="200" class="mono rung-hdr">// RUNG 001 : TENTANG SAYA (3 PILAR KEAHLIAN &amp; INTEGRASI)</text>
+<line x1="55" y1="230" x2="105" y2="230" class="wire"/>
+<line x1="105" y1="218" x2="105" y2="242" stroke="#00ff88" stroke-width="3"/>
+<line x1="120" y1="218" x2="120" y2="242" stroke="#00ff88" stroke-width="3"/>
+<line x1="105" y1="230" x2="120" y2="230" stroke="#00ff88" stroke-width="1.5" stroke-dasharray="2,2"/>
+<text x="112" y="214" class="mono contact-lbl">M100</text>
+<text x="112" y="254" class="mono contact-tag">(PROFILE_EN)</text>
+<line x1="120" y1="230" x2="150" y2="230" class="wire"/>
+<line x1="150" y1="200" x2="150" y2="370" class="wire"/>
+<line x1="150" y1="200" x2="175" y2="200" class="wire"/>
+<rect x="175" y="175" width="570" height="52" rx="5" fill="url(#boxGrad)" stroke="#388bfd" stroke-width="1.5"/>
+<text x="185" y="191" class="mono inst-title">MOV [01: WEB &amp; SOFTWARE DEVELOPMENT]</text>
+<text x="185" y="207" class="mono inst-param">s : <tspan class="inst-val">"Aplikasi Web Interaktif &amp; Scalable (Next.js, React, TypeScript, Tailwind)"</tspan></text>
+<text x="185" y="221" class="mono inst-param">d : <tspan class="inst-reg">D110_WEB_FULLSTACK_DEV</tspan></text>
+<line x1="745" y1="200" x2="815" y2="200" class="wire"/>
+<path d="M 815 188 A 12 12 0 0 1 815 212" stroke="#00ff88" stroke-width="2.5" fill="none"/>
+<path d="M 845 188 A 12 12 0 0 0 845 212" stroke="#00ff88" stroke-width="2.5" fill="none"/>
+<text x="830" y="204" class="mono coil-lbl">Y010</text>
+<text x="830" y="222" class="mono coil-tag">(WEB_RUN)</text>
+<line x1="845" y1="200" x2="905" y2="200" class="wire-off"/>
+<line x1="150" y1="285" x2="175" y2="285" class="wire"/>
+<rect x="175" y="260" width="570" height="52" rx="5" fill="url(#boxGrad)" stroke="#f0883e" stroke-width="1.5"/>
+<text x="185" y="276" class="mono" fill="#f0883e" font-size="11px" font-weight="bold">MOV [02: INDUSTRIAL AUTOMATION &amp; ROBOTICS]</text>
+<text x="185" y="292" class="mono inst-param">s : <tspan class="inst-val">"Kontrol Mesin, Robotik Industri, PLC Mitsubishi (FX/Q) &amp; Omron (CP/CJ)"</tspan></text>
+<text x="185" y="306" class="mono inst-param">d : <tspan class="inst-reg">D120_PLC_ROBOTICS_CTRL</tspan></text>
+<line x1="745" y1="285" x2="815" y2="285" class="wire"/>
+<path d="M 815 273 A 12 12 0 0 1 815 297" stroke="#00ff88" stroke-width="2.5" fill="none"/>
+<path d="M 845 273 A 12 12 0 0 0 845 297" stroke="#00ff88" stroke-width="2.5" fill="none"/>
+<text x="830" y="289" class="mono coil-lbl">Y020</text>
+<text x="830" y="307" class="mono coil-tag">(PLC_RUN)</text>
+<line x1="845" y1="285" x2="905" y2="285" class="wire-off"/>
+<line x1="150" y1="370" x2="175" y2="370" class="wire"/>
+<rect x="175" y="345" width="570" height="52" rx="5" fill="url(#boxGrad)" stroke="#a371f7" stroke-width="1.5"/>
+<text x="185" y="361" class="mono" fill="#d2a8ff" font-size="11px" font-weight="bold">CALL [03: IT / OT CONVERGENCE &amp; CLOUD TELEMETRY]</text>
+<text x="185" y="377" class="mono inst-param">s : <tspan class="inst-val">"Modbus RTU/TCP, Serial RS-232/485, MQTT, SCADA -&gt; Real-Time Web Dashboard"</tspan></text>
+<text x="185" y="391" class="mono inst-param">d : <tspan class="inst-reg">P_IT_OT_INTEGRATION_SUBROUTINE</tspan></text>
+<line x1="745" y1="370" x2="815" y2="370" class="wire"/>
+<path d="M 815 358 A 12 12 0 0 1 815 382" stroke="#00ff88" stroke-width="2.5" fill="none"/>
+<path d="M 845 358 A 12 12 0 0 0 845 382" stroke="#00ff88" stroke-width="2.5" fill="none"/>
+<text x="830" y="374" class="mono coil-lbl">Y030</text>
+<text x="830" y="392" class="mono coil-tag">(IT_OT_SYNC)</text>
+<line x1="845" y1="370" x2="905" y2="370" class="wire-off"/>
+<text x="68" y="450" class="mono rung-hdr">// RUNG 002 : TECH STACK &amp; PERIPHERALS (BMOV BLOCK TRANSFER)</text>
+<line x1="55" y1="475" x2="105" y2="475" class="wire"/>
+<line x1="105" y1="463" x2="105" y2="487" stroke="#00ff88" stroke-width="3"/>
+<line x1="120" y1="463" x2="120" y2="487" stroke="#00ff88" stroke-width="3"/>
+<text x="112" y="459" class="mono contact-lbl">X001</text>
+<text x="112" y="499" class="mono contact-tag">(DEV_QUERY)</text>
+<line x1="120" y1="475" x2="175" y2="475" class="wire"/>
+<rect x="175" y="445" width="570" height="58" rx="5" fill="url(#boxGrad)" stroke="#388bfd" stroke-width="1.5"/>
+<text x="185" y="463" class="mono inst-title">BMOV (Block Move 16 Registers)</text>
+<text x="185" y="479" class="mono inst-param">WEB_REG: <tspan class="inst-val">Next.js, React, Node.js, TS, Tailwind, PostgreSQL, Prisma, Docker</tspan></text>
+<text x="185" y="494" class="mono inst-param">PLC_REG: <tspan class="inst-val">Mitsubishi (GX Works2/3), Omron (Sysmac), Modbus, Serial, SCADA</tspan></text>
+<line x1="745" y1="475" x2="815" y2="475" class="wire"/>
+<path d="M 815 463 A 12 12 0 0 1 815 487" stroke="#00ff88" stroke-width="2.5" fill="none"/>
+<path d="M 845 463 A 12 12 0 0 0 845 487" stroke="#00ff88" stroke-width="2.5" fill="none"/>
+<text x="830" y="479" class="mono coil-lbl">Y100</text>
+<text x="830" y="497" class="mono coil-tag">(STACK_OK)</text>
+<line x1="845" y1="475" x2="905" y2="475" class="wire-off"/>
+<text x="68" y="555" class="mono rung-hdr">// RUNG 003 : COMMUNICATION PORTS &amp; MAIN SCAN END</text>
+<line x1="55" y1="575" x2="105" y2="575" class="wire"/>
+<line x1="105" y1="563" x2="105" y2="587" stroke="#00ff88" stroke-width="3"/>
+<line x1="120" y1="563" x2="120" y2="587" stroke="#00ff88" stroke-width="3"/>
+<path d="M 108 581 L 112 569 L 117 581" stroke="#00ff88" stroke-width="1.5" fill="none"/>
+<text x="112" y="559" class="mono contact-lbl">SM412</text>
+<text x="112" y="599" class="mono contact-tag">(1s Clock)</text>
+<line x1="120" y1="575" x2="175" y2="575" class="wire"/>
+<rect x="175" y="551" width="570" height="46" rx="5" fill="url(#boxGrad)" stroke="#3fb950" stroke-width="1.5"/>
+<text x="185" y="568" class="mono" fill="#7ee787" font-size="11px" font-weight="bold">COM_OPEN [NET_INTERFACE: LinkedIn | Outlook | GitHub]</text>
+<text x="185" y="586" class="mono inst-param">PORT: <tspan class="inst-val">LINKEDIN (sirojul-kahfi) | EMAIL (sirojulkahfi@outlook.com) | GIT (sirojulkahfi)</tspan></text>
+<line x1="745" y1="575" x2="815" y2="575" class="wire"/>
+<rect x="805" y="561" width="55" height="28" rx="3" fill="#21262d" stroke="#f85149" stroke-width="2"/>
+<text x="832" y="579" class="mono" fill="#f85149" font-size="11px" font-weight="bold" text-anchor="middle">FEND</text>
+<line x1="860" y1="575" x2="905" y2="575" class="wire-off"/>
+<line x1="15" y1="658" x2="945" y2="658" stroke="#21262d" stroke-width="1"/>
+<text x="30" y="672" class="mono" fill="#8b949e" font-size="10px">IEC 61131-3 STANDARD LADDER LOGIC | ARCHITECTURE: IT/OT SYSTEM CONVERGENCE</text>
+<text x="930" y="672" class="mono" fill="#8b949e" font-size="10px" text-anchor="end">SIROJUL KAHFI &copy; 2026</text>
+</svg>

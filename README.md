@@ -16,60 +16,87 @@
   <img src="https://img.shields.io/badge/Stack-Next.js%20%7C%20PLC%20%7C%20SCADA-00ff88?style=for-the-badge&labelColor=0d1117" alt="Stack" />
 </p>
 
+---
+
+## ⚡ PLC LADDER DIAGRAM (LD) - SISTEM KONTROL PROFIL
+
+<p align="center">
+  <img src="./assets/ladder_diagram.svg" alt="PLC Ladder Diagram - Tentang Saya & Tech Stack" width="100%" />
+</p>
+
 ```text
-========================================================================
-PROGRAM : SIROJUL_KAHFI_MAIN.gxw   | CPU: MITSUBISHI Q-SERIES / OMRON SYSMAC
-STATUS  : RUN MODE (M8000 = ON)     | SCAN TIME: 0.28 ms | STEP: 0000 -> END
-========================================================================
++=================================================================================================+
+| PROGRAM : SIROJUL_KAHFI.LD   | CPU: MITSUBISHI Q-SERIES / OMRON SYSMAC | MODE: RUN (M8000=ON)   |
+| STATUS  : SYSTEM OPERATIONAL | SCAN TIME: 0.24 ms                      | STEP: 0000 -> END      |
++=================================================================================================+
+
++--[ NETWORK 001 : TENTANG SAYA (ABOUT ME CORE PROFILE) ]-----------------------------------------+
+|                                                                                                 |
+|  // --- 1.1: CORE IDENTITY & FOCUS -----------------------------------------------------------  |
+|  |--[ SM400 ]---+--[ MOV "Sirojul Kahfi - Software Dev & Industrial Automation"        D000 ]---|
+|  | (Always ON)  +--[ MOV "Fokus: Web App Modern & Sistem Otomasi / Kontrol Mesin PLC"  D001 ]---|
+|  |                                                                                              |
+|  // --- 1.2: WEB & SOFTWARE DEVELOPMENT ------------------------------------------------------  |
+|  |--[ M100 ]----+--[ MOV "Frontend: Next.js (App Router, SSR/SSG), React.js"           D110 ]---|
+|  | (Web Core)   |--[ MOV "Styling & Logic: Tailwind CSS, TypeScript, JavaScript"       D111 ]---|
+|  |              |--[ MOV "Backend & Data: Node.js, PostgreSQL, Prisma ORM, REST API"   D112 ]---|
+|  |              |--[ MOV "Target: Membangun web interaktif, performant & scalable"     D113 ]---|
+|  |              +--[ OUT Y010_WEB_DEVELOPMENT_ACTIVE                                        ]---(Y010)
+|  |                                                                                   (WEB_ONLINE)
+|  // --- 1.3: INDUSTRIAL AUTOMATION & ROBOTICS ------------------------------------------------  |
+|  |--[ M200 ]----+--[ MOV "Mitsubishi PLC: FX Series, Q Series (GX Works2 / GX Works3)" D120 ]---|
+|  | (Auto Core)  |--[ MOV "Omron PLC: CP Series, CJ Series (CX-Programmer, Sysmac)"     D121 ]---|
+|  |              |--[ MOV "Bahasa: Ladder Diagram (LD) & Structured Text (ST)"          D122 ]---|
+|  |              |--[ MOV "Robotics: Pemrograman Kontrol Mesin & Robotika Industri"     D123 ]---|
+|  |              +--[ OUT Y020_INDUSTRIAL_AUTOMATION_ACTIVE                                  ]---(Y020)
+|  |                                                                                   (PLC_ONLINE)
+|  // --- 1.4: IT / OT CONVERGENCE & SCADA INTEGRATION -----------------------------------------  |
+|  +--[ M300 ]----+--[ MOV "Protokol: Modbus RTU/TCP, Serial RS-232/RS-485, MQTT"        D130 ]---|
+|    (Bridge)     |--[ MOV "Akuisisi: Data Mesin Industri Real-Time ke Web Cloud"        D131 ]---|
+|                 |--[ MOV "Monitoring: HMI, SCADA Dashboard & IoT Cloud Analytics"      D132 ]---|
+|                 +--[ CALL P_IT_OT_CONVERGENCE                                          K1   ]---(Y030)
+|                                                                                      (IT_OT_SYNC)
++-------------------------------------------------------------------------------------------------+
+
++--[ NETWORK 002 : TECH STACK & KEANLIAN (DATA REGISTERS BMOV) ]----------------------------------+
+|                                                                                                 |
+|  // --- 2.1: WEB & CLOUD SOFTWARE ENGINEERING ------------------------------------------------  |
+|  |--[ X001_WEB ]---+--[ BMOV D200_FE  "Next.js | React | TypeScript | Tailwind"       K4 ]------|
+|  | (Web Trig)      |--[ BMOV D204_BE  "Node.js | PostgreSQL | Prisma ORM | REST API"   K4 ]------|
+|  |                 |--[ BMOV D208_DEV "Git | GitHub | Docker Environment"              K3 ]------|
+|  |                 +--[ OUT Y100_FULLSTACK_WEB_STACK_ACTIVE                                 ]---(Y100)
+|  |                                                                                   (STACK_OK)
+|  // --- 2.2: INDUSTRIAL AUTOMATION & ROBOTICS HARDWARE ---------------------------------------  |
+|  |--[ X002_AUTO ]--+--[ BMOV D300_PLC "Mitsubishi FX/Q | Omron CP/CJ | Sysmac Studio"  K3 ]------|
+|  | (Auto Trig)     |--[ BMOV D303_LAN "Ladder Diagram (LD) | Structured Text (ST)"     K2 ]------|
+|  |                 |--[ BMOV D305_COM "Modbus RTU/TCP | Serial RS-485/232 | MQTT"      K3 ]------|
+|  |                 |--[ BMOV D308_IOT "HMI / SCADA | IT/OT Realtime Web Dashboard"     K3 ]------|
+|  |                 +--[ OUT Y200_INDUSTRIAL_SYSTEMS_ACTIVE                                  ]---(Y200)
+|  |                                                                                   (AUTO_OK)
+|  // --- 2.3: REAL-TIME ACTIVITY & TELEMETRY MONITOR ------------------------------------------  |
+|  |--[ M8013 ]---------[ PID_FEEDBACK "GITHUB_STREAK_SYNC" D500                         K10  ]---(Y300)
+|  | (1s Clock Pulse)                                                                  (TELEMETRY)
+|  // --- 2.4: COMMUNICATION BUS & CONTACT ROUTINE ---------------------------------------------  |
+|  +--[ X003_PING ]--+--[ COM_OPEN "LinkedIn"   "id.linkedin.com/in/sirojul-kahfi"       ]--------|
+|    (Connect)       |--[ COM_OPEN "Outlook"    "sirojulkahfi@outlook.com"               ]--------|
+|                    |--[ COM_OPEN "GitHub"     "github.com/sirojulkahfi"                ]--------|
+|                    +--[ FEND                                                                ]---(END)
+|                         (End of Ladder Main Program Execution)                                  |
++-------------------------------------------------------------------------------------------------+
 ```
 
 ---
 
-```text
-+--[ NETWORK 001 : TENTANG SAYA (PROFILE_INIT) ]------------------------+
-|                                                                       |
-|  |--[ M8000 ]---+--[ MOV "Fullstack Web Developer"   D100_ROLE     ]--|
-|  | (Always ON)  |--[ MOV "Industrial Automation"     D102_DOMAIN   ]  |
-|  |              |--[ MOV "PLC Mitsubishi & Omron"    D104_HARDWARE ]  |
-|  |              +--[ CALL P_IT_OT_CONVERGENCE        K1            ]  |
-|  |                                                                 |  |
-|  +--[ M8013 ]------[ OUT Y001_SYSTEM_OPERATIONAL                   ]--+
-|    (1s Pulse)      (Real-time Web Monitoring + SCADA Active)          |
-+-----------------------------------------------------------------------+
-```
+## 🖥️ HMI / SCADA DASHBOARD (PERIPHERAL OUTPUTS)
 
-### 🚀 Tentang Saya
-Software Developer & Industrial Automation Enthusiast. Fokus pada pengembangan aplikasi web modern dan integrasi sistem otomasi industri / kontrol berbasis PLC:
+> Output visual dari coil PLC (`Y010_WEB`, `Y020_PLC`, `Y300_TELEMETRY`, `Y_COM`) yang terhubung ke dashboard monitoring:
 
-* 💻 **Web & Software Development:** Terbiasa membangun aplikasi web interaktif, performant, dan scalable menggunakan **Next.js**, **React**, **TypeScript**, dan **Tailwind CSS**.
-* ⚡ **Industrial Automation & Robotics:** Berpengalaman dalam kontrol mesin, perancangan sistem robotik industri, serta pemrograman **PLC Mitsubishi** dan **Omron**.
-* 🔗 **IT / OT Convergence:** Mengintegrasikan sistem otomasi industri (OT: Modbus, Serial RS-232/485, MQTT, SCADA) dengan web dashboard monitoring & cloud analytics real-time (IT).
-
----
-
-```text
-+--[ NETWORK 002 : TECH STACK & DATA REGISTERS ]------------------------+
-|                                                                       |
-|  |--[ X001_WEB_REQ ]---[ BMOV D200_WEB_CORE   D300_DEPLOY K10 ]--(Y002)
-|  |  (Web Dashboard)    (Next.js, React, Node, Postgres, Docker) (SSR) |
-|  |                                                                 |  |
-|  +--[ X002_PLC_TRIG ]--[ MC_ROBOT_ARM "UNIT-73" D400_OT   K8  ]--(Y003)
-|     (Sensor / PLC)     (Mitsubishi FX/Q, Omron CP/CJ, SCADA)   (AUTO) |
-+-----------------------------------------------------------------------+
-```
-
-### 🛠️ Tech Stack & Keahlian
-
-#### 🌐 Web & Software Engineering
+#### 🌐 Web Engineering Peripherals `[COIL Y010 / Y100]`
 <p align="left">
   <img src="https://skillicons.dev/icons?i=nextjs,react,ts,js,nodejs,postgres,prisma,tailwind,git,docker" />
 </p>
 
-* **Frontend:** Next.js (App Router, SSR/SSG), React.js, Tailwind CSS, TypeScript / JavaScript
-* **Backend & Database:** Node.js, PostgreSQL, Prisma ORM, REST API
-* **Tools & Environment:** Git, GitHub, Docker
-
-#### 🏭 Industrial Automation, PLC & Robotics
+#### 🏭 Industrial Automation & PLC Hardware `[COIL Y020 / Y200]`
 <p align="left">
   <img src="https://img.shields.io/badge/Mitsubishi_Electric-E60012?style=for-the-badge&logo=mitsubishi&logoColor=white" />
   <img src="https://img.shields.io/badge/Omron_Automation-005BAC?style=for-the-badge&logoColor=white" />
@@ -78,44 +105,12 @@ Software Developer & Industrial Automation Enthusiast. Fokus pada pengembangan a
   <img src="https://img.shields.io/badge/SCADA_&_IIoT-008080?style=for-the-badge&labelColor=white" />
 </p>
 
-* **PLC Platforms & Engineering Software:**
-  * **Mitsubishi:** FX Series, Q Series (*GX Works2 / GX Works3*)
-  * **Omron:** CP Series, CJ Series (*CX-Programmer, Sysmac Studio*)
-* **Programming Languages:** Ladder Diagram (LD), Structured Text (ST)
-* **Industrial Communication:** Modbus (RTU/TCP), Serial (RS-232/RS-485), Ethernet/IP, MQTT
-* **Integration Focus:** IT/OT Convergence, HMI/SCADA, Real-time machine data acquisition ke Web Dashboard
-
----
-
-```text
-+--[ NETWORK 003 : TELEMETRY & ACTIVITY MONITOR ]-----------------------+
-|                                                                       |
-|  |--[ M8013 ]----------[ PID_CONTROL "GITHUB_STREAK" D500 ]-----(Y004)|
-|    (1s Clock Pulse)    (Continuous Dev Streak & Commit Flow)   (SYNC) |
-+-----------------------------------------------------------------------+
-```
-
-### 📈 GitHub Streak Stats
+#### 📈 Real-Time Development Streak `[COIL Y300]`
 <p align="center">
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=sirojulkahfi&theme=tokyonight&background=0d1117&ring=00f0ff&fire=00f0ff&currStreakNum=00f0ff" alt="Sirojul's GitHub Streak" />
 </p>
 
----
-
-```text
-+--[ NETWORK 004 : COMMUNICATION BUS (CONNECT_ME) ]---------------------+
-|                                                                       |
-|  |--[ X003_PING ]---+--[ COM_OPEN "LinkedIn"   PORT_LINKEDIN ]--(M100)|
-|  |  (Connect Req)   |--[ COM_OPEN "Outlook"    PORT_MAIL     ]--(M101)|
-|  |                  +--[ COM_OPEN "GitHub"     PORT_REPO     ]--(M102)|
-|  |                                                                    |
-|  +--[ FEND ]----------------------------------------------------------+
-|    (End of Main Program)
-+-----------------------------------------------------------------------+
-```
-
-### 📬 Hubungi Saya
-
+#### 📬 Communication Port Interfaces `[COIL Y_COM]`
 <p align="left">
   <a href="https://id.linkedin.com/in/sirojul-kahfi-29a170224" target="_blank">
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />

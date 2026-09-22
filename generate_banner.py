@@ -1,17 +1,16 @@
-"""
-Mario Bros Anime Industrial Factory Banner Generator (GIF & PNG) v3.0
-======================================================================
-Fixes & Improvements:
-  ✅ GEARS: All 3 gears rotate with CORRECT calibrated coordinates:
-     - Big Lower Gear: center (495, 550), r=112, 18 teeth, clockwise
-     - Medium Gear: center (543, 400), r=52, 14 teeth, counter-clockwise
-     - Top Gear: center (455, 315), r=72, 16 teeth, clockwise
-  ✅ STEAM/ASAP: 4-source animated rising steam clouds (puff, grow, fade)
-  ✅ GAUGE NEEDLES: PRESSURE, STEAM, POWER oscillate naturally with jitter
-  ✅ BUTTONS & BEACON: Arcade panel flashing, amber strobe
-  ✅ ENERGY PULSE: Green pipe glow flow
-  ✅ Color: Vibrant Mario palette maintained (NO cold blue grading)
-"""
+# Mario Bros Anime Industrial Factory Banner Generator v5.0
+# PROFESSIONAL OVERHAUL - Maximum quality cinematic animation
+# Steps:
+#   A. Rotating Gears (ultra-smooth, 48 frames)
+#   B. Gauge Needles (physics-based oscillation + micro-tremor)
+#   C. Steam Clouds (3-layer organic puffs, 4 sources)
+#   D. Monitor Screen Glow + Scanlines
+#   E. Arcade Buttons (staggered 7-step sequencer)
+#   F. Amber Warning Strobe
+#   G. Pipe Indicator Lamps
+#   H. Energy Pulse (directional sweep on green pipe)
+#   I. Electric Sparks near gears
+#   J. Cinematic Vignette
 
 import os
 import math
@@ -20,319 +19,296 @@ import cv2
 import numpy as np
 from PIL import Image, ImageEnhance
 
+NUM_FRAMES  = 48
+DURATION_MS = 65
+TARGET_W    = 860
+SEED        = 1985
+
+
 def generate_mario_industrial_banner(
     base_image_path="assets/banner_base.jpg",
     output_gif_path="assets/banner.gif",
     output_png_path="assets/banner.png",
-    num_frames=30,
-    duration=80,
-    target_width=850
+    num_frames=NUM_FRAMES,
+    duration=DURATION_MS,
+    target_width=TARGET_W,
 ):
     if not os.path.exists(base_image_path):
-        raise FileNotFoundError(f"Base image not found at {base_image_path}")
+        raise FileNotFoundError(f"Base image not found: {base_image_path}")
 
-    print(f"Loading Mario anime industrial base image: {base_image_path}...")
+    print(f"[1/7] Loading base image: {base_image_path}")
     base_bgr = cv2.imread(base_image_path)
-    h_orig, w_orig, _ = base_bgr.shape
-    print(f"  Image size: {w_orig}x{h_orig}")
+    h_orig, w_orig = base_bgr.shape[:2]
+    print(f"      Source: {w_orig}x{h_orig}")
 
-    # Enhance color vibrancy slightly for rich Mario anime aesthetic
+    # Color grading - warm vibrant Mario aesthetic
     base_pil = Image.fromarray(cv2.cvtColor(base_bgr, cv2.COLOR_BGR2RGB))
-    base_pil_vibrant = ImageEnhance.Color(base_pil).enhance(1.15)
-    base_pil_vibrant = ImageEnhance.Contrast(base_pil_vibrant).enhance(1.06)
+    base_pil = ImageEnhance.Color(base_pil).enhance(1.18)
+    base_pil = ImageEnhance.Contrast(base_pil).enhance(1.07)
+    base_pil = ImageEnhance.Brightness(base_pil).enhance(1.03)
 
-    # Save clean pristine PNG banner at target width
+    # Save pristine PNG
     aspect = h_orig / w_orig
     target_height = int(target_width * aspect)
-    clean_png = base_pil_vibrant.resize((target_width, target_height), Image.Resampling.LANCZOS)
-    clean_png.save(output_png_path, format="PNG", optimize=True)
-    print(f"PNG saved: {output_png_path} ({target_width}x{target_height})")
+    clean = base_pil.resize((target_width, target_height), Image.Resampling.LANCZOS)
+    clean.save(output_png_path, format="PNG", optimize=True)
+    print(f"      PNG saved: {output_png_path} ({target_width}x{target_height})")
 
-    base_vibrant_bgr = cv2.cvtColor(np.array(base_pil_vibrant), cv2.COLOR_RGB2BGR)
+    base_vib = cv2.cvtColor(np.array(base_pil), cv2.COLOR_RGB2BGR)
 
     # -----------------------------------------------------------------
-    # GEAR TRAIN (calibrated from debug grid analysis)
+    # [2/7] GEAR TRAIN
     # -----------------------------------------------------------------
+    print("[2/7] Configuring gear train...")
     GEARS = [
-        {"cx": 495, "cy": 550, "r": 112, "pitch_deg": 20.0,  "dir": 1,  "name": "big_lower"},
-        {"cx": 543, "cy": 400, "r": 52,  "pitch_deg": 25.7,  "dir": -1, "name": "medium"},
-        {"cx": 455, "cy": 315, "r": 72,  "pitch_deg": 22.5,  "dir": 1,  "name": "top"},
+        {"cx": 495, "cy": 550, "r": 112, "pitch": 18.0, "dir":  1},
+        {"cx": 543, "cy": 400, "r":  52, "pitch": 24.0, "dir": -1},
+        {"cx": 455, "cy": 315, "r":  72, "pitch": 21.0, "dir":  1},
     ]
 
-    # -----------------------------------------------------------------
-    # Foreground mask (elements that stay IN FRONT of gears)
-    # -----------------------------------------------------------------
     fg_mask = np.zeros((h_orig, w_orig), dtype=np.uint8)
-    fg_mask[:, :430] = 255                          # Left pipe & gauges
-    fg_mask[590:650, 420:560] = 255                 # Horizontal green pipe
+    fg_mask[:, :430] = 255
+    fg_mask[590:650, 420:560] = 255
+    cv2.fillPoly(fg_mask, [np.array([[474,498],[540,498],[552,540],[552,660],[462,660],[462,545]], np.int32)], 255)
+    cv2.fillPoly(fg_mask, [np.array([[420,615],[600,615],[600,768],[420,768]], np.int32)], 255)
+    fg_mask[:, 560:] = 255
 
-    pts_worker = np.array([
-        [474, 498], [540, 498], [552, 540],
-        [552, 660], [462, 660], [462, 545]
-    ], np.int32)
-    cv2.fillPoly(fg_mask, [pts_worker], 255)
-
-    pts_catwalk = np.array([
-        [420, 615], [600, 615], [600, 768], [420, 768]
-    ], np.int32)
-    cv2.fillPoly(fg_mask, [pts_catwalk], 255)
-    fg_mask[:, 560:] = 255                          # Right console
-
-    # Build soft-edged blend masks for each gear
-    gear_masks = []
+    gear_alphas = []
     for g in GEARS:
         raw = np.zeros((h_orig, w_orig), dtype=np.uint8)
         cv2.circle(raw, (g["cx"], g["cy"]), g["r"], 255, -1)
         raw[fg_mask > 0] = 0
-        blur = cv2.GaussianBlur(raw, (5, 5), 0)[:, :, None] / 255.0
-        gear_masks.append(blur)
+        blurred = cv2.GaussianBlur(raw.astype(np.float32), (7, 7), 0) / 255.0
+        gear_alphas.append(blurred[:, :, np.newaxis])
 
     # -----------------------------------------------------------------
-    # GAUGE NEEDLE CONFIGURATION (calibrated positions)
+    # [3/7] GAUGE NEEDLES
     # -----------------------------------------------------------------
+    print("[3/7] Configuring gauge needles...")
     GAUGES = [
-        {
-            "name": "PRESSURE",
-            "cx": 128, "cy": 468,
-            "needle_len": 36,
-            "base_deg": -80, "swing": 20, "speed": 0.8,
-            "color": (0, 0, 160), "tip_color": (40, 40, 255),
-            "min_deg": -130, "max_deg": -50,
-        },
-        {
-            "name": "STEAM",
-            "cx": 215, "cy": 497,
-            "needle_len": 26,
-            "base_deg": -95, "swing": 25, "speed": 1.2,
-            "color": (0, 80, 0), "tip_color": (0, 200, 80),
-            "min_deg": -130, "max_deg": -50,
-        },
-        {
-            "name": "POWER",
-            "cx": 138, "cy": 575,
-            "needle_len": 28,
-            "base_deg": -75, "swing": 28, "speed": 0.65,
-            "color": (0, 0, 140), "tip_color": (0, 30, 255),
-            "min_deg": -130, "max_deg": -50,
-        },
+        {"cx": 128, "cy": 468, "nl": 36, "base": -80, "swing": 22, "spd": 0.75,
+         "col": (0,0,150), "tip": (30,30,255), "lo": -130, "hi": -50},
+        {"cx": 215, "cy": 497, "nl": 26, "base": -90, "swing": 28, "spd": 1.15,
+         "col": (0,70,0), "tip": (0,190,70), "lo": -130, "hi": -50},
+        {"cx": 138, "cy": 575, "nl": 28, "base": -72, "swing": 30, "spd": 0.60,
+         "col": (0,0,130), "tip": (0,20,245), "lo": -130, "hi": -50},
     ]
 
     # -----------------------------------------------------------------
-    # STEAM Cloud Seeds (4 sources throughout the scene)
+    # [4/7] STEAM CLOUD SEEDS
     # -----------------------------------------------------------------
-    random.seed(1985)
-    steam_seeds = []
+    print("[4/7] Seeding steam system...")
+    rng = random.Random(SEED)
 
-    # Source 1: Top center chimney area (~530, 160)
-    for _ in range(30):
-        steam_seeds.append({
-            'ox': random.uniform(515, 565),
-            'oy': random.uniform(80, 200),
-            'r': random.uniform(14, 32),
-            'spd': random.uniform(1.5, 3.0),
-            'drift': random.uniform(-2.5, 2.5),
-            'alpha': random.uniform(0.18, 0.38),
-            'phase': random.uniform(0, 2 * math.pi),
-        })
+    def seeds(n, oxlo, oxhi, oylo, oyhi, rlo, rhi, slo, shi, dlo, dhi, alo, ahi):
+        return [{"ox": rng.uniform(oxlo, oxhi), "oy": rng.uniform(oylo, oyhi),
+                 "r": rng.uniform(rlo, rhi), "spd": rng.uniform(slo, shi),
+                 "drift": rng.uniform(dlo, dhi), "alpha": rng.uniform(alo, ahi),
+                 "phase": rng.uniform(0, 2*math.pi),
+                 "off_r": rng.uniform(0.30, 0.55), "off_a": rng.uniform(0.50, 0.75)}
+                for _ in range(n)]
 
-    # Source 2: Red brick chimney (top right, ~620, 120)
-    for _ in range(25):
-        steam_seeds.append({
-            'ox': random.uniform(600, 660),
-            'oy': random.uniform(10, 130),
-            'r': random.uniform(12, 28),
-            'spd': random.uniform(1.8, 3.5),
-            'drift': random.uniform(-3.0, 3.0),
-            'alpha': random.uniform(0.14, 0.30),
-            'phase': random.uniform(0, 2 * math.pi),
-        })
-
-    # Source 3: Lower catwalk pipe vent (~710, 680)
-    for _ in range(20):
-        steam_seeds.append({
-            'ox': random.uniform(695, 745),
-            'oy': random.uniform(620, 690),
-            'r': random.uniform(8, 18),
-            'spd': random.uniform(1.0, 2.2),
-            'drift': random.uniform(-2.0, 2.0),
-            'alpha': random.uniform(0.15, 0.35),
-            'phase': random.uniform(0, 2 * math.pi),
-        })
-
-    # Source 4: Top-left pipe vent (~80, 150)
-    for _ in range(15):
-        steam_seeds.append({
-            'ox': random.uniform(55, 110),
-            'oy': random.uniform(50, 200),
-            'r': random.uniform(10, 22),
-            'spd': random.uniform(1.2, 2.5),
-            'drift': random.uniform(-1.5, 1.5),
-            'alpha': random.uniform(0.12, 0.28),
-            'phase': random.uniform(0, 2 * math.pi),
-        })
+    steam_seeds = (
+        seeds(32, 515, 565,  70, 210, 13, 30, 1.4, 2.8, -2.5, 2.5, 0.16, 0.36) +
+        seeds(26, 598, 660,   5, 135, 11, 26, 1.7, 3.3, -3.0, 3.0, 0.12, 0.28) +
+        seeds(22, 694, 746, 615, 695,  8, 18, 0.9, 2.1, -2.0, 2.0, 0.13, 0.33) +
+        seeds(16,  52, 112,  40, 205,  9, 20, 1.1, 2.4, -1.5, 1.5, 0.10, 0.26)
+    )
 
     # -----------------------------------------------------------------
-    # Arcade Console Buttons & Flashing Signals Setup
+    # [5/7] CONSOLE SIGNALS
     # -----------------------------------------------------------------
-    buttons = [
-        (980, 420, 11, (0, 0, 255)),
-        (1030, 420, 11, (0, 220, 255)),
-        (1085, 420, 11, (50, 255, 50)),
-        (1090, 450, 11, (255, 180, 0)),
-        (980, 480, 11, (50, 255, 50)),
-        (1030, 480, 11, (0, 220, 255)),
-        (1085, 480, 11, (0, 0, 255)),
+    print("[5/7] Configuring console signals...")
+    BUTTONS = [
+        (980,420,11,(0,0,235)), (1030,420,11,(0,215,250)), (1085,420,11,(45,255,45)),
+        (1090,450,11,(255,175,0)), (980,480,11,(45,255,45)),
+        (1030,480,11,(0,215,250)), (1085,480,11,(0,0,235)),
     ]
-    beacon_pos = (1048, 345)
+    BEACON = (1048, 345)
+    LAMPS  = [(130,715,(0,0,240)), (152,712,(0,215,250)), (175,710,(45,255,75))]
+    SCREEN = (565, 330, 755, 475)
 
-    pipe_indicators = [
-        (130, 715, (0, 0, 255)),
-        (152, 712, (0, 220, 255)),
-        (175, 710, (50, 255, 80)),
-    ]
+    # Precompute vignette (slow pure-python, done once)
+    print("      Building vignette kernel...")
+    vig = np.zeros((h_orig, w_orig), dtype=np.float32)
+    cx_v, cy_v = w_orig / 2.0, h_orig / 2.0
+    yy, xx = np.mgrid[0:h_orig, 0:w_orig]
+    dx = (xx - cx_v) / cx_v
+    dy = (yy - cy_v) / cy_v
+    vig = np.clip(1.0 - 0.40 * (dx*dx + dy*dy), 0.52, 1.0).astype(np.float32)
+    vig = vig[:, :, np.newaxis]   # (H, W, 1)
 
-    frames_bgr = []
-    print(f"Synthesizing {num_frames} frames: gears + needles + steam + lights...")
+    # -----------------------------------------------------------------
+    # [6/7] FRAME SYNTHESIS
+    # -----------------------------------------------------------------
+    print(f"[6/7] Synthesizing {num_frames} frames...")
+    frames_rgb = []
+    rng2 = random.Random(SEED + 1)
 
     for f_idx in range(num_frames):
-        t = f_idx / num_frames
+        t   = f_idx / num_frames
         ang = t * 2 * math.pi
-        frame = base_vibrant_bgr.copy().astype(np.float32)
+        frame = base_vib.copy().astype(np.float32)
 
-        # -------------------------------------------------------------
-        # 1. ROTATING MECHANICAL GEARS (all 3 gears)
-        # -------------------------------------------------------------
-        for gear, g_mask in zip(GEARS, gear_masks):
-            rot_deg = t * gear["pitch_deg"] * gear["dir"]
+        # A. Gears
+        for gear, alpha in zip(GEARS, gear_alphas):
+            rot_deg = t * gear["pitch"] * gear["dir"]
             M = cv2.getRotationMatrix2D((gear["cx"], gear["cy"]), rot_deg, 1.0)
-            rot_img = cv2.warpAffine(
-                base_vibrant_bgr, M, (w_orig, h_orig),
-                flags=cv2.INTER_CUBIC
-            ).astype(np.float32)
-            frame = (1.0 - g_mask) * frame + g_mask * rot_img
+            rot = cv2.warpAffine(base_vib, M, (w_orig, h_orig),
+                                 flags=cv2.INTER_CUBIC,
+                                 borderMode=cv2.BORDER_REFLECT101).astype(np.float32)
+            frame = (1.0 - alpha) * frame + alpha * rot
 
         frame = np.clip(frame, 0, 255).astype(np.uint8)
 
-        # -------------------------------------------------------------
-        # 2. ANIMATED GAUGE NEEDLES (PRESSURE, STEAM, POWER)
-        # -------------------------------------------------------------
-        for g_idx, gauge in enumerate(GAUGES):
-            osc = math.sin(ang * gauge["speed"] + g_idx * 1.2)
-            jitter = 0.12 * math.sin(ang * gauge["speed"] * 3.3 + g_idx + 1.1)
-            needle_deg = gauge["base_deg"] + osc * gauge["swing"] + jitter * gauge["swing"] * 0.3
-            needle_deg = max(gauge["min_deg"], min(gauge["max_deg"], needle_deg))
+        # B. Gauge needles
+        for gi, g in enumerate(GAUGES):
+            ph = gi * 1.37
+            osc = math.sin(ang * g["spd"] + ph)
+            jit = 0.10 * math.sin(ang * g["spd"] * 3.7 + ph + 1.2)
+            deg = g["base"] + osc * g["swing"] + jit * g["swing"] * 0.25
+            deg = max(g["lo"], min(g["hi"], deg))
+            rad = math.radians(deg)
+            cx, cy, nl = g["cx"], g["cy"], g["nl"]
+            tx = int(cx + nl * math.cos(rad))
+            ty = int(cy + nl * math.sin(rad))
+            hx = int(cx - 6 * math.cos(rad))
+            hy = int(cy - 6 * math.sin(rad))
+            cv2.line(frame, (hx, hy), (tx, ty), g["col"], 3, cv2.LINE_AA)
+            cv2.line(frame, (hx, hy), (tx, ty), g["tip"], 1, cv2.LINE_AA)
+            cv2.circle(frame, (cx, cy), 5, (45,45,45), -1)
+            cv2.circle(frame, (cx, cy), 3, (215,215,215), -1)
 
-            rad = math.radians(needle_deg)
-            cx, cy = gauge["cx"], gauge["cy"]
-            nl = gauge["needle_len"]
-            tip_x = int(cx + nl * math.cos(rad))
-            tip_y = int(cy + nl * math.sin(rad))
-            hub_x = int(cx - 5 * math.cos(rad))
-            hub_y = int(cy - 5 * math.sin(rad))
-
-            cv2.line(frame, (hub_x, hub_y), (tip_x, tip_y), gauge["color"], 3, cv2.LINE_AA)
-            cv2.line(frame, (hub_x, hub_y), (tip_x, tip_y), gauge["tip_color"], 1, cv2.LINE_AA)
-            cv2.circle(frame, (cx, cy), 4, (50, 50, 50), -1)
-            cv2.circle(frame, (cx, cy), 2, (220, 220, 220), -1)
-
-        # -------------------------------------------------------------
-        # 3. RISING ANIME STEAM / ASAP CLOUDS (4 sources, animated)
-        # -------------------------------------------------------------
-        steam_layer = np.zeros((h_orig, w_orig), dtype=np.float32)
-
+        # C. Steam clouds (3-layer)
+        slayer = np.zeros((h_orig, w_orig), dtype=np.float32)
         for s in steam_seeds:
-            rise = (f_idx * s['spd']) % 120
-            cur_y = s['oy'] - rise
-            cur_x = s['ox'] + s['drift'] * math.sin(ang + s['phase'])
-            puff_r = int(s['r'] + rise * 0.25)
-            alpha_fade = s['alpha'] * max(0.0, 1.0 - rise / 110.0)
-
-            ix, iy = int(cur_x), int(cur_y)
-            if 0 < ix < w_orig and 0 < iy < h_orig and puff_r > 0:
-                cv2.circle(steam_layer, (ix, iy), puff_r, alpha_fade, -1)
-                off = int(puff_r * 0.45)
+            rise   = (f_idx * s["spd"]) % 130
+            cx_s   = s["ox"] + s["drift"] * math.sin(ang + s["phase"])
+            cy_s   = s["oy"] - rise
+            pr     = int(s["r"] + rise * 0.22)
+            fade   = s["alpha"] * max(0.0, 1.0 - rise / 120.0)
+            ix, iy = int(cx_s), int(cy_s)
+            if 0 < ix < w_orig and 0 < iy < h_orig and pr > 0:
+                cv2.circle(slayer, (ix, iy), pr, fade, -1)
+                off = int(pr * s["off_r"])
                 ox2, oy2 = ix + off, iy - off // 2
                 if 0 < ox2 < w_orig and 0 < oy2 < h_orig:
-                    cv2.circle(steam_layer, (ox2, oy2), int(puff_r * 0.7), alpha_fade * 0.6, -1)
+                    cv2.circle(slayer, (ox2, oy2), int(pr * s["off_a"]), fade*0.55, -1)
+                oy3 = iy - int(pr * 0.70)
+                if 0 < ix < w_orig and 0 < oy3 < h_orig:
+                    cv2.circle(slayer, (ix, oy3), int(pr * 0.40), fade*0.35, -1)
 
-        steam_blur = cv2.GaussianBlur(steam_layer, (31, 31), 0)
-        frame_float = frame.astype(np.float32)
+        sblur = cv2.GaussianBlur(slayer, (35, 35), 0)
+        ff = frame.astype(np.float32)
         for c in range(3):
-            frame_float[:, :, c] = np.clip(frame_float[:, :, c] + steam_blur * 220.0, 0, 255)
-        frame = frame_float.astype(np.uint8)
+            ff[:, :, c] = np.clip(ff[:, :, c] + sblur * 215.0, 0, 255)
+        frame = ff.astype(np.uint8)
 
-        # -------------------------------------------------------------
-        # 4. Flashing Arcade Pushbuttons on Control Console
-        # -------------------------------------------------------------
-        for b_idx, (bx, by, br, bcol) in enumerate(buttons):
-            b_active = ((f_idx + b_idx * 3) % 6 < 3)
-            if b_active:
-                btn_glow = np.zeros_like(frame, dtype=np.uint8)
-                cv2.circle(btn_glow, (bx, by), br + 4, bcol, -1)
-                cv2.circle(btn_glow, (bx, by), br - 2, (255, 255, 255), -1)
-                btn_glow = cv2.GaussianBlur(btn_glow, (9, 9), 0)
-                frame = cv2.addWeighted(frame, 1.0, btn_glow, 0.65, 0)
+        # D. Monitor screen glow + scanlines
+        x1s, y1s, x2s, y2s = SCREEN
+        sp = 0.60 + 0.40 * math.sin(ang * 1.7 + 0.5)
+        sg = np.zeros_like(frame, dtype=np.uint8)
+        cv2.rectangle(sg, (x1s, y1s), (x2s, y2s), (30, 220, 100), -1)
+        sg = cv2.GaussianBlur(sg, (25, 25), 0)
+        frame = cv2.addWeighted(frame, 1.0, sg, 0.22 * sp, 0)
+        for sy in range(y1s, y2s, 4):
+            if sy < h_orig:
+                frame[sy, x1s:x2s] = (frame[sy, x1s:x2s].astype(np.float32) * 0.72).astype(np.uint8)
 
-        # -------------------------------------------------------------
-        # 5. Pipe Indicator Lamps Blinking (Red, Yellow, Green)
-        # -------------------------------------------------------------
-        for i_idx, (ix, iy, icol) in enumerate(pipe_indicators):
-            lamp_on = ((f_idx + i_idx * 2) % 4 < 2)
-            if lamp_on:
-                lamp_glow = np.zeros_like(frame, dtype=np.uint8)
-                cv2.circle(lamp_glow, (ix, iy), 8, icol, -1)
-                lamp_glow = cv2.GaussianBlur(lamp_glow, (11, 11), 0)
-                frame = cv2.addWeighted(frame, 1.0, lamp_glow, 0.55, 0)
+        # E. Arcade buttons (7-step sequencer)
+        for bi, (bx, by, br, bcol) in enumerate(BUTTONS):
+            if ((f_idx + bi * 4) % 7) < 3:
+                bg = np.zeros_like(frame, dtype=np.uint8)
+                cv2.circle(bg, (bx, by), br+5, bcol, -1)
+                cv2.circle(bg, (bx, by), br-2, (255,255,255), -1)
+                bg = cv2.GaussianBlur(bg, (11, 11), 0)
+                frame = cv2.addWeighted(frame, 1.0, bg, 0.60, 0)
 
-        # -------------------------------------------------------------
-        # 6. Industrial Amber Warning Strobe on Console
-        # -------------------------------------------------------------
-        beacon_flash = (math.sin(ang * 3) * 0.5 + 0.5) ** 4
-        if beacon_flash > 0.15:
-            bc_x, bc_y = beacon_pos
-            b_rad = int(12 + 18 * beacon_flash)
-            b_glow = np.zeros_like(frame, dtype=np.uint8)
-            cv2.circle(b_glow, (bc_x, bc_y), b_rad, (0, 200, 255), -1)
-            cv2.circle(b_glow, (bc_x, bc_y), int(b_rad * 0.4), (180, 245, 255), -1)
-            b_glow_blur = cv2.GaussianBlur(b_glow, (21, 21), 0)
-            frame = cv2.addWeighted(frame, 1.0, b_glow_blur, 0.85 * beacon_flash, 0)
+        # F. Amber strobe beacon
+        bf = (math.sin(ang * 3.2) * 0.5 + 0.5) ** 3
+        if bf > 0.12:
+            bx, by = BEACON
+            brad = int(11 + 20 * bf)
+            bg2 = np.zeros_like(frame, dtype=np.uint8)
+            cv2.circle(bg2, (bx, by), brad, (0,195,255), -1)
+            cv2.circle(bg2, (bx, by), int(brad*0.38), (170,245,255), -1)
+            bg2 = cv2.GaussianBlur(bg2, (23, 23), 0)
+            frame = cv2.addWeighted(frame, 1.0, bg2, 0.82 * bf, 0)
 
-        # -------------------------------------------------------------
-        # 7. Flowing Energy Pulse on Green Pipe Arrows
-        # -------------------------------------------------------------
-        arrow_pulse = 0.5 + 0.5 * math.sin(ang * 2)
-        arrow_layer = np.zeros_like(frame, dtype=np.uint8)
-        cv2.ellipse(arrow_layer, (205, 715), (40, 20), 0, 0, 360, (100, 255, 120), -1)
-        arrow_layer = cv2.GaussianBlur(arrow_layer, (15, 15), 0)
-        frame = cv2.addWeighted(frame, 1.0, arrow_layer, 0.40 * arrow_pulse, 0)
+        # G. Pipe indicator lamps
+        for li, (lx, ly, lc) in enumerate(LAMPS):
+            if ((f_idx + li * 3) % 5) < 2:
+                lg = np.zeros_like(frame, dtype=np.uint8)
+                cv2.circle(lg, (lx, ly), 9, lc, -1)
+                lg = cv2.GaussianBlur(lg, (13, 13), 0)
+                frame = cv2.addWeighted(frame, 1.0, lg, 0.52, 0)
 
-        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        frames_bgr.append(frame_rgb)
+        # H. Energy pulse sweep on green pipe (left->right)
+        ap = 0.45 + 0.55 * math.sin(ang * 2.3)
+        sweep_x = int(160 + 90 * ((t * 2) % 1.0))
+        al = np.zeros_like(frame, dtype=np.uint8)
+        cv2.ellipse(al, (sweep_x, 715), (45, 18), 0, 0, 360, (80, 255, 110), -1)
+        al = cv2.GaussianBlur(al, (17, 17), 0)
+        frame = cv2.addWeighted(frame, 1.0, al, 0.38 * ap, 0)
 
-    # -------------------------------------------------------------
-    # 8. Export High-Quality Animated Looping GIF
-    # -------------------------------------------------------------
-    print(f"Resizing and quantizing {len(frames_bgr)} frames to {target_width}px...")
-    pil_rgb = [Image.fromarray(f).resize((target_width, target_height), Image.Resampling.LANCZOS) for f in frames_bgr]
+        # I. Random electric sparks near gear edges
+        if (f_idx % 7 == 0) and rng2.random() < 0.55:
+            gidx = rng2.randint(0, len(GEARS)-1)
+            g = GEARS[gidx]
+            sa = rng2.uniform(0, 2*math.pi)
+            sr = g["r"] * rng2.uniform(0.85, 1.05)
+            sx = int(g["cx"] + sr * math.cos(sa))
+            sy = int(g["cy"] + sr * math.sin(sa))
+            if 0 < sx < w_orig and 0 < sy < h_orig:
+                spk = np.zeros_like(frame, dtype=np.uint8)
+                cv2.circle(spk, (sx, sy), 6, (150, 255, 255), -1)
+                spk = cv2.GaussianBlur(spk, (9, 9), 0)
+                frame = cv2.addWeighted(frame, 1.0, spk, 0.75, 0)
 
-    base_palette_img = pil_rgb[0].convert("P", palette=Image.Palette.ADAPTIVE, colors=240)
-    pil_p = [pim.quantize(palette=base_palette_img, dither=Image.Dither.FLOYDSTEINBERG) for pim in pil_rgb]
+        # J. Cinematic vignette
+        frame = np.clip(frame.astype(np.float32) * vig, 0, 255).astype(np.uint8)
 
-    print(f"Saving looping GIF to {output_gif_path}...")
+        frames_rgb.append(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+        if (f_idx + 1) % 12 == 0:
+            print(f"      Frame {f_idx+1}/{num_frames} done")
+
+    # -----------------------------------------------------------------
+    # [7/7] EXPORT GIF
+    # -----------------------------------------------------------------
+    print(f"[7/7] Resizing {len(frames_rgb)} frames to {target_width}px...")
+    pil_frames = [
+        Image.fromarray(f).resize((target_width, target_height), Image.Resampling.LANCZOS)
+        for f in frames_rgb
+    ]
+
+    print("      Per-frame adaptive 256-color quantization...")
+    pil_p = [
+        frm.quantize(colors=256, method=Image.Quantize.MEDIANCUT,
+                     dither=Image.Dither.FLOYDSTEINBERG)
+        for frm in pil_frames
+    ]
+
+    print(f"      Writing: {output_gif_path}")
     pil_p[0].save(
         output_gif_path,
         save_all=True,
         append_images=pil_p[1:],
         duration=duration,
         loop=0,
-        optimize=True
+        optimize=True,
     )
 
-    gif_mb = os.path.getsize(output_gif_path) / (1024 * 1024)
-    png_mb = os.path.getsize(output_png_path) / (1024 * 1024)
-    print("\n✅ SUCCESS!")
-    print(f"  PNG: {output_png_path} ({png_mb:.2f} MB, {target_width}x{target_height})")
-    print(f"  GIF: {output_gif_path} ({gif_mb:.2f} MB, {target_width}x{target_height}, {num_frames} frames)")
+    gif_mb = os.path.getsize(output_gif_path) / (1024*1024)
+    png_mb = os.path.getsize(output_png_path) / (1024*1024)
+
+    print()
+    print("=" * 60)
+    print("  SUCCESS - Banner v5.0 Generated!")
+    print(f"  PNG : {output_png_path} ({png_mb:.2f} MB)")
+    print(f"  GIF : {output_gif_path} ({gif_mb:.2f} MB)")
+    print(f"  Size: {target_width}x{target_height}  |  {num_frames} frames  |  {duration}ms/frame")
+    print("=" * 60)
+
 
 if __name__ == "__main__":
     generate_mario_industrial_banner()

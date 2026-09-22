@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/banner.gif" alt="Industrial Automation & Robotics Anime Banner" width="100%" />
+  <img src="./assets/banner.gif" alt="Mario Bros Anime Industrial Factory Banner" width="100%" />
 </p>
 
 <h1 align="center">Hi there, I'm Sirojul Kahfi 👋</h1>

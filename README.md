@@ -18,7 +18,7 @@
 
 ---
 
-## 🏭 INDUSTRIAL FACTORY SCENE (Animated SVG)
+## 🏭 INDUSTRIAL FACTORY
 
 <p align="center">
   <img src="./assets/industrial_mario_bros_scene.svg" alt="Mario Bros Industrial Factory — Animated SVG Scene" width="100%" />
